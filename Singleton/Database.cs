@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DesignPatterns.Entities.Engine;
+using DesignPatterns.Entities.FuelSystem;
+using DesignPatterns.Entities.Vehicles;
 
 namespace DesignPatterns.Singleton
 {
@@ -22,6 +19,21 @@ namespace DesignPatterns.Singleton
             if(instance == null)
                 instance = new Database();
             return instance;
+        }
+
+        public void SaveEngine(IEngine engine)
+        {
+            Console.WriteLine($"Saving [TYPE: {engine.GetType()} - POWER: {engine.Power}] to the database...");
+        }
+
+        public void SaveFuelSystem(IFuelSystem fuel_system)
+        {
+            Console.WriteLine($"Saving [TYPE: {fuel_system.GetType()} - CAPACITY: {fuel_system.Capacity}] to the database...");
+        }
+
+        public void SaveVehicle(IVehicle vehicle)
+        {
+            Console.WriteLine($"Saving {vehicle.GetInfo()} to the database...");
         }
     }
 }

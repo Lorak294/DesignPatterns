@@ -1,6 +1,7 @@
 ﻿using DesignPatterns.Entities.PartFactories;
 using DesignPatterns.Entities.Vehicles;
 using DesignPatterns.Singleton;
+using DesignPatterns.Visitor;
 using System;
 
 namespace DesignPatterns
@@ -9,45 +10,32 @@ namespace DesignPatterns
     {
         static void Main()
         {
-            //SingletonDemo();
-            FactoryAndBuilderDemo();
+            DbSaveVisitor dbVisitor = new DbSaveVisitor();
+            FileSaveVisitor fileVisitor = new FileSaveVisitor();
 
-
-        }
-
-        static void SingletonDemo()
-        {
-            for(int i=0; i< 10; i++)
-            {
-                Console.WriteLine($"Creating db instance #{i}");
-                Database db = Database.GetInstance();
-            }
-
-        }
-
-        static void FactoryAndBuilderDemo()
-        {
-            var carInitInfo = new(ICarPartsFactory factory,string brand, string model, int engPower, int fuelCap, int startFuel)[]{
-                (new DieselFactory(), "Volkswagen","Golf",100,40,40),
-                (new PetrolFactory(), "Fiat","Multipla",75,30,25),
-                (new ElectricFactory(), "Tesla","Model S",600,150,130),
+            var carInitInfo = new (ICarPartsFactory factory, string brand, string model, int engPower, int fuelCap, int startFuel, ISaveEntitiyVisitor visitor)[]{
+                (new DieselFactory(), "Volkswagen","Golf",100,40,40, dbVisitor),
+                (new PetrolFactory(), "Fiat","Multipla",75,30,0, dbVisitor),
+                (new ElectricFactory(), "Tesla","Model S",600,150,130, fileVisitor),
             };
-
 
             foreach (var info in carInitInfo)
             {
+                Console.WriteLine("=====================================================================");
+                // build the car
                 Car c = new CarBuilder()
                     .AddBrand(info.brand)
                     .AddModel(info.model)
                     .AddEngine(info.factory.CreateEngine(info.engPower))
                     .AddFuelSystem(info.factory.CreateFuelSystem(info.fuelCap))
                     .Build();
-
-                c.PrintInfo();
-
+                // print car info
+                Console.WriteLine($"Created {c.GetInfo()}");
+                // start the car
                 c.RefuelAndGo(info.startFuel);
+                // save the car using visitor
+                (c as IVehicle).Save(info.visitor);
             }
-
 
         }
     }

@@ -1,5 +1,6 @@
 ﻿using DesignPatterns.Entities.Engine;
 using DesignPatterns.Entities.FuelSystem;
+using DesignPatterns.Visitor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,20 @@ namespace DesignPatterns.Entities.Vehicles
 
         public void RefuelAndGo(int fuel)
         {
+            Console.WriteLine("Refuelling....");
             FuelSystem.AddFuel(fuel);
-            Engine.MakeSound();
+            Console.WriteLine("Starting....");
+            if(fuel > 0)
+                Engine.MakeSound();
+            else
+                Console.WriteLine("Out of fuel :(");
         }
 
-        public void PrintInfo()
+        public string GetInfo()
         {
-            Console.WriteLine($"[{Brand} {Model} with {Engine.Power} HP engine]");
+            var engine_type_str = Engine.GetType().Name;
+            engine_type_str = engine_type_str.Substring(0, engine_type_str.LastIndexOf("Engine"));
+            return $"[{Brand} {Model} with {Engine.Power} HP {engine_type_str} engine]";
         }
     }
 }
