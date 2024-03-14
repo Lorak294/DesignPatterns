@@ -9,11 +9,12 @@ namespace DesignPatterns.Singleton
 {
     public class Database
     {
-        private static Database instance;
+        private static Database? instance;
 
         private Database() 
         {
-            Debug.WriteLine("Conecting to the database server");
+            Console.WriteLine("Conecting to the database server...");
+            Console.WriteLine("Conected.");
         }
 
         public static Database GetInstance()
