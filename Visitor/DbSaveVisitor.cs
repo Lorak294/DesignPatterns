@@ -7,20 +7,19 @@ namespace DesignPatterns.Visitor
 {
     public class DbSaveVisitor : ISaveEntitiyVisitor
     {
-        private Database _db = Database.GetInstance();
         public void Visit(IEngine engine)
         {
-            _db.SaveEngine(engine);
+            Database.GetInstance().SaveEngine(engine);
         }
 
         public void Visit(IFuelSystem fuelSystem)
         {
-            _db.SaveFuelSystem(fuelSystem);
+            Database.GetInstance().SaveFuelSystem(fuelSystem);
         }
 
         void ISaveEntitiyVisitor.Visit(IVehicle vehicle)
         {
-            _db.SaveVehicle(vehicle);
+            Database.GetInstance().SaveVehicle(vehicle);
         }
     }
 }

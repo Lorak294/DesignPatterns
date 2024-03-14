@@ -22,7 +22,7 @@ namespace DesignPatterns
             foreach (var info in carInitInfo)
             {
                 Console.WriteLine("=====================================================================");
-                // build the car
+                // build the car (builder + abstract factory)
                 Car c = new CarBuilder()
                     .AddBrand(info.brand)
                     .AddModel(info.model)
@@ -34,7 +34,7 @@ namespace DesignPatterns
                 // start the car
                 c.RefuelAndGo(info.startFuel);
                 // save the car using visitor
-                (c as IVehicle).Save(info.visitor);
+                c.Save(info.visitor);
             }
 
         }

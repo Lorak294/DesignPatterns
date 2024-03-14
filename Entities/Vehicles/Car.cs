@@ -33,5 +33,12 @@ namespace DesignPatterns.Entities.Vehicles
             engine_type_str = engine_type_str.Substring(0, engine_type_str.LastIndexOf("Engine"));
             return $"[{Brand} {Model} with {Engine.Power} HP {engine_type_str} engine]";
         }
+
+        public void Save(ISaveEntitiyVisitor visitor) 
+        {
+            Engine.Save(visitor);
+            FuelSystem?.Save(visitor);
+            visitor.Visit(this); 
+        }
     }
 }

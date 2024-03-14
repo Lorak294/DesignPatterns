@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DesignPatterns.Visitor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace DesignPatterns.Entities.FuelSystem
     {
         int Capacity { get; set; }
         void AddFuel(int amount);
+        void Save(ISaveEntitiyVisitor visitor) { visitor.Visit(this); }
     }
 }

@@ -23,12 +23,12 @@ namespace DesignPatterns.Singleton
 
         public void SaveEngine(IEngine engine)
         {
-            Console.WriteLine($"Saving [TYPE: {engine.GetType()} - POWER: {engine.Power}] to the database...");
+            Console.WriteLine($"Saving [TYPE: {engine.GetType().Name} - POWER: {engine.Power}] to the database...");
         }
 
         public void SaveFuelSystem(IFuelSystem fuel_system)
         {
-            Console.WriteLine($"Saving [TYPE: {fuel_system.GetType()} - CAPACITY: {fuel_system.Capacity}] to the database...");
+            Console.WriteLine($"Saving [TYPE: {fuel_system.GetType().Name} - CAPACITY: {fuel_system.Capacity}] to the database...");
         }
 
         public void SaveVehicle(IVehicle vehicle)
