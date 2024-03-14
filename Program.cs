@@ -17,6 +17,7 @@ namespace DesignPatterns
                 (new DieselFactory(), "Volkswagen","Golf",100,40,40, dbVisitor),
                 (new PetrolFactory(), "Fiat","Multipla",75,30,0, dbVisitor),
                 (new ElectricFactory(), "Tesla","Model S",600,150,130, fileVisitor),
+                (new PetrolFactory(), "Daewoo","Tico Fantastico",1000,100,90, dbVisitor),
             };
 
             foreach (var info in carInitInfo)
@@ -33,7 +34,7 @@ namespace DesignPatterns
                 Console.WriteLine($"Created {c.GetInfo()}");
                 // start the car
                 c.RefuelAndGo(info.startFuel);
-                // save the car using visitor
+                // save the car using visitor (single db connection because of singleton pattern)
                 c.Save(info.visitor);
             }
 

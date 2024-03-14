@@ -10,8 +10,8 @@ namespace DesignPatterns.Singleton
 
         private Database() 
         {
-            Console.WriteLine("Conecting to the database server...");
-            Console.WriteLine("Conected.");
+            Console.WriteLine("[SYSTEM] Conecting to the database server...");
+            Console.WriteLine("[SYSTEM] Conected.");
         }
 
         public static Database GetInstance()
