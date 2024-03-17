@@ -1,12 +1,15 @@
 ﻿using DesignPatterns.Entities.Engine;
 using DesignPatterns.Entities.FuelSystem;
 using DesignPatterns.Entities.Vehicles;
+using System.Linq;
 
 namespace DesignPatterns.Singleton
 {
     public class Database
     {
         private static Database? instance;
+
+        private List<IVehicle> vehicles = new List<IVehicle>();
 
         private Database() 
         {
@@ -34,6 +37,20 @@ namespace DesignPatterns.Singleton
         public void SaveVehicle(IVehicle vehicle)
         {
             Console.WriteLine($"Saving {vehicle.GetInfo()} to the database...");
+            vehicles.Add(vehicle);
+        }
+
+        public List<IVehicle> GetVehicles()
+        {
+            Console.WriteLine("Getting vehicles form the db...");
+            return vehicles;
+        }
+
+        public List<Car> GetVehiclesOfType<T>()
+            where T: IVehicle
+        {
+            Console.WriteLine("Getting cars form the db...");
+            return vehicles.OfType<Car>().ToList();
         }
     }
 }

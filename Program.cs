@@ -1,5 +1,6 @@
 ﻿using DesignPatterns.Entities.PartFactories;
 using DesignPatterns.Entities.Vehicles;
+using DesignPatterns.Proxy.CarServices;
 using DesignPatterns.Singleton;
 using DesignPatterns.Visitor;
 using System;
@@ -38,6 +39,39 @@ namespace DesignPatterns
                 c.Save(info.visitor);
             }
 
+            // get cars from the db using service directy (no cache)
+            Console.WriteLine("=====================================================================");
+            Console.WriteLine("GETTING CARS FROM THE DB USING SERVICE:");
+            ICarQueryService carQueryService = new CarQueryService();
+            var cars = carQueryService.GetCars(CarQueryCriteria.Any());
+            Console.WriteLine("RETREIVED CARS:");
+            foreach (var c in cars)
+            {
+                Console.WriteLine($"{c.GetInfo()}");
+            }
+            cars = carQueryService.GetCars(CarQueryCriteria.Any());
+            Console.WriteLine("RETREIVED CARS:");
+            foreach (var c in cars)
+            {
+                Console.WriteLine($"{c.GetInfo()}");
+            }
+
+            // get cars from the db using service proxy (cached results)
+            Console.WriteLine("=====================================================================");
+            Console.WriteLine("GETTING CARS FROM THE DB USING SERVICE:");
+            carQueryService = new CarQueryServiceProxy(carQueryService);
+            cars = carQueryService.GetCars(CarQueryCriteria.Any());
+            Console.WriteLine("RETREIVED CARS:");
+            foreach (var c in cars)
+            {
+                Console.WriteLine($"{c.GetInfo()}");
+            }
+            cars = carQueryService.GetCars(CarQueryCriteria.Any());
+            Console.WriteLine("RETREIVED CARS:");
+            foreach (var c in cars)
+            {
+                Console.WriteLine($"{c.GetInfo()}");
+            }
         }
     }
 }
